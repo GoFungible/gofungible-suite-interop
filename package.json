@@ -1,0 +1,8 @@
+{
+  "name": "gofungible-suite",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@hyperlane-xyz/core": "^10.1.3"
+  }
+}
