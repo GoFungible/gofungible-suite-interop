@@ -1,0 +1,1 @@
+# gofungible-suite-interop
