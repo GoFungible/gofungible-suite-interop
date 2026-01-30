@@ -4,9 +4,10 @@ pragma solidity ^0.8.9;
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";
 
-import "../../relayers/hyperlane/IMailbox.sol";
+import "../../interfaces/hyperlane/IMailbox.sol";
+// https://github.com/hyperlane-xyz/hyperlane-monorepo/blob/main/solidity/contracts/interfaces/IMailbox.sol
 
-contract TramferMoneyWithHiperlaneWarp is ISendMoney {
+contract SendMoneyWithHiperlaneWarp is ISendMoney {
     IMailbox inbox;
     bytes32 public lastSender;
     string public lastMessage;
