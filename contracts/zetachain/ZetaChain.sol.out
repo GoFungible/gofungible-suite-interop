@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.26;
+pragma solidity 0.8.30;
 
-import "https://github.com/zeta-chain/standard-contracts/blob/main/contracts/messaging/contracts/Messaging.sol";
+//import "https://github.com/zeta-chain/standard-contracts/blob/main/contracts/messaging/contracts/Messaging.sol";
 
 // https://github.com/zeta-chain/example-contracts/blob/main/examples/messaging/contracts/Messaging.sol
 contract Example is Messaging {

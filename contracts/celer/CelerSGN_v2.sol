@@ -1,15 +1,14 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.30;
 
-pragma solidity >=0.8.9;
-
-import "https://github.com/celer-network/sgn-v2-contracts/blob/main/contracts/message/framework/MessageApp.sol";
+//import "https://github.com/celer-network/sgn-v2-contracts/blob/main/contracts/message/framework/MessageApp.sol";
 
 // A HelloWorld example for basic cross-chain message passing
 // https://github.com/celer-network/sgn-v2-contracts/blob/main/contracts/message/apps/examples/MsgExampleBasic.sol
-contract MsgExampleBasic is MessageApp {
+/*contract MsgExampleBasic is MessageApp {
     event MessageReceived(address srcContract, uint64 srcChainId, address sender, bytes message);
 
-    constructor(address _messageBus) MessageApp(_messageBus) {}
+    //constructor(address _messageBus) MessageApp(_messageBus) {}
 
     // called by user on source chain to send cross-chain messages
     function sendMessage(
@@ -32,4 +31,4 @@ contract MsgExampleBasic is MessageApp {
         emit MessageReceived(_srcContract, _srcChainId, sender, message);
         return ExecutionStatus.Success;
     }
-}
+}*/

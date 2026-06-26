@@ -1,24 +1,26 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.9;
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.30;
 
-import "./IMailbox.sol";
+import "./interfaces/IMailbox.sol";
+import "./interfaces/IMessageRecipient.sol";
+import "gofungible-erc-20-multichain-relayer-extension/contracts/IMessageRelayer.sol";
 
 // Hyperlane GMP
-contract Messenger is IMessageRecipient, IMessenger {
+contract Messenger is IMessageRecipient {
 
     constructor(address _inbox, address _outbox) {
       inbox = IMailbox(_inbox);
       outbox = IMailbox(_outbox);
     }
 
-    mapping(address => uint256) public receivers;
+    mapping(address => address) public receivers;
 
     function registerReceiver(address _receiver) external {
-			receiver[_receiver] = _receiver;
+			receivers[_receiver] = _receiver;
 		}
 
     function unregisterReceiver(address _receiver) external {
-			delete receiver[_receiver];
+			delete receivers[_receiver];
 		}
 
     IMailbox outbox;
@@ -31,7 +33,7 @@ contract Messenger is IMessageRecipient, IMessenger {
 
     IMailbox inbox;
 
-    function handle(uint32 _origin, bytes32 _sender, bytes calldata _message) external {
+    function handle(uint32 _origin, bytes32 _sender, bytes calldata _message) external payable {
 
 
       emit ReceivedMessage(_origin, _sender, _message);

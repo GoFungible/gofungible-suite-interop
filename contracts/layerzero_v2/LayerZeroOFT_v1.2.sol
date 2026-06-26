@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.17;
+pragma solidity 0.8.30;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.3/contracts/token/ERC20/ERC20.sol";
+//import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.3/contracts/token/ERC20/ERC20.sol";
 
-import "https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/lzApp/NonblockingLzApp.sol";
+//import "https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/lzApp/NonblockingLzApp.sol";
 
 /*
     LayerZero Optimism Goerli
@@ -14,7 +14,7 @@ import "https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/
       contract: 0xDD3f986D006Cb4061c3D3E94d8BdcfFE4F295125
 */
 // CrossChainToken
-contract GMPProxy is NonblockingLzApp, ERC20 {
+/*contract GMPProxy is NonblockingLzApp, ERC20 {
     uint16 destChainId;
     
     constructor(address _lzEndpoint) NonblockingLzApp(_lzEndpoint) ERC20("Cross Chain Token", "CCT") Ownable(msg.sender) {
@@ -37,4 +37,4 @@ contract GMPProxy is NonblockingLzApp, ERC20 {
     function trustAddress(address _otherContract) public onlyOwner {
         trustedRemoteLookup[destChainId] = abi.encodePacked(_otherContract, address(this));   
     }
-}
+}*/

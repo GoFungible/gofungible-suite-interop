@@ -1,19 +1,19 @@
-// SPDX-License-Identifier: MIT OR Apache-2.0
-pragma solidity ^0.8.9;
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.30;
 
 // ============ Internal Imports ============
-import {BridgeMessage} from "https://github.com/nomad-xyz/monorepo/blob/93daaf931378b79c53e3c494af9671c59e843ee1/packages/contracts-bridge/contracts/BridgeMessage.sol";
-import {IBridgeToken} from "https://github.com/nomad-xyz/monorepo/blob/93daaf931378b79c53e3c494af9671c59e843ee1/packages/contracts-bridge/contracts/interfaces/IBridgeToken.sol";
-import {ITokenRegistry} from "./interfaces/ITokenRegistry.sol";
+//import {BridgeMessage} from "https://github.com/nomad-xyz/monorepo/blob/93daaf931378b79c53e3c494af9671c59e843ee1/packages/contracts-bridge/contracts/BridgeMessage.sol";
+//import {IBridgeToken} from "https://github.com/nomad-xyz/monorepo/blob/93daaf931378b79c53e3c494af9671c59e843ee1/packages/contracts-bridge/contracts/interfaces/IBridgeToken.sol";
+//import {ITokenRegistry} from "./interfaces/ITokenRegistry.sol";
 
 // ============ External Imports ============
-import {XAppConnectionClient} from "https://github.com/nomad-xyz/monorepo/blob/93daaf931378b79c53e3c494af9671c59e843ee1/packages/contracts-router/contracts/XAppConnectionClient.sol";
-import {Router} from "https://github.com/nomad-xyz/monorepo/blob/93daaf931378b79c53e3c494af9671c59e843ee1/packages/contracts-router/contracts/Router.sol";
-import {Home} from "https://github.com/nomad-xyz/monorepo/blob/93daaf931378b79c53e3c494af9671c59e843ee1/packages/contracts-core/contracts/Home.sol";
-import {Version0} from "https://github.com/nomad-xyz/monorepo/blob/93daaf931378b79c53e3c494af9671c59e843ee1/packages/contracts-core/contracts/Version0.sol";
-import {TypedMemView} from "@summa-tx/memview-sol/contracts/TypedMemView.sol";
-import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+//import {XAppConnectionClient} from "https://github.com/nomad-xyz/monorepo/blob/93daaf931378b79c53e3c494af9671c59e843ee1/packages/contracts-router/contracts/XAppConnectionClient.sol";
+//import {Router} from "https://github.com/nomad-xyz/monorepo/blob/93daaf931378b79c53e3c494af9671c59e843ee1/packages/contracts-router/contracts/Router.sol";
+//import {Home} from "https://github.com/nomad-xyz/monorepo/blob/93daaf931378b79c53e3c494af9671c59e843ee1/packages/contracts-core/contracts/Home.sol";
+//import {Version0} from "https://github.com/nomad-xyz/monorepo/blob/93daaf931378b79c53e3c494af9671c59e843ee1/packages/contracts-core/contracts/Version0.sol";
+//import {TypedMemView} from "@summa-tx/memview-sol/contracts/TypedMemView.sol";
+//import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+//import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
 /**
  * @title BridgeRouter

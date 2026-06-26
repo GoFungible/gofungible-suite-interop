@@ -1,7 +1,10 @@
 {
-  "name": "gofungible-suite",
+  "name": "gofungible-suite-interop",
   "version": "1.0.0",
   "type": "module",
+	"dependencies": {
+    "gofungible-erc-20-multichain-relayer-extension": "github:GoFungible/gofungible-erc-20-multichain-relayer-extension"
+  },
   "devDependencies": {
     "hardhat": "^3.1.5"
   }

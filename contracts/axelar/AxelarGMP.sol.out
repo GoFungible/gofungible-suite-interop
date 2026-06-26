@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.30;
 
-import {IAxelarGateway} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol";
-import {IAxelarGasService} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGasService.m.sol"; // Use .m.sol for mainnet, or .t.sol for testnet
+//import {IAxelarGateway} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol";
+//import {IAxelarGasService} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGasService.m.sol"; // Use .m.sol for mainnet, or .t.sol for testnet
+import "./IAxelarGateway.sol";
+import "./IAxelarGasService.sol";
 
 contract DestinationContract {
     IAxelarGateway public gateway;

@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: MIT OR Apache-2.0
-pragma solidity >=0.6.11;
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.30;
 
 interface IMessageRecipient {
     function handle(

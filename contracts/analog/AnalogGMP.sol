@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT
-// Analog's Contracts (last updated v0.1.0) (test/utils/GmpProxy.sol)
+pragma solidity 0.8.30;
 
-pragma solidity >=0.8.0;
+//import {IGmpReceiver} from "https://github.com/Analog-Labs/analog-gmp/blob/main/gmp/src/IGmpReceiver.sol";
+//import {IGateway} from "https://github.com/Analog-Labs/analog-gmp/blob/main/gmp/src/IGateway.sol";
 
-import {IGmpReceiver} from "https://github.com/Analog-Labs/analog-gmp/blob/main/gmp/src/IGmpReceiver.sol";
-import {IGateway} from "https://github.com/Analog-Labs/analog-gmp/blob/main/gmp/src/IGateway.sol";
+import "./IGmpReceiver.sol";
+import "./IGateway.sol";
 
 // https://github.com/Analog-Labs/analog-gmp/blob/main/src/GmpProxy.sol
 contract AnalogGMP is IGmpReceiver {
