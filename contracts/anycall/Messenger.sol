@@ -9,7 +9,7 @@ import "@anycall/contracts/interfaces/IAnycallV6Executor.sol";
  * @dev A contract that can both send and receive cross-chain messages using Anycall V6
  * Supports: Multichain, Ethereum, BSC, Polygon, Avalanche, Fantom, etc.
  */
-contract AnycallMessenger is IAnycallV6Executor {
+contract Messenger is IAnycallV6Executor {
     // Anycall proxy contract
     IAnycallV6Proxy public anycallProxy;
     

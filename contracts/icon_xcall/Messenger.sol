@@ -1,7 +1,7 @@
 pragma solidity ^0.8.0;
 
 // Sender Contract - Sends messages to Receiver contract
-contract MessageSender {
+contract Messenger {
     address public receiverContract;
     address public admin;
     

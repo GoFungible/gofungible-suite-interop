@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-// Import ISMP interfaces
-interface IIsmp {
+// HyperBridge ISMP
+interface Messenger {
     struct PostRequest {
         bytes source;
         bytes dest;
