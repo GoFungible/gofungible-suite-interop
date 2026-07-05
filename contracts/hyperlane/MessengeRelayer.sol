@@ -3,10 +3,10 @@ pragma solidity 0.8.30;
 
 import "./interfaces/IMailbox.sol";
 import "./interfaces/IMessageRecipient.sol";
-import "gofungible-erc-20-multichain-relayer-extension/contracts/IMessageRelayer.sol";
+import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
 
 // Hyperlane GMP
-contract Messenger is IMessageRecipient {
+contract MessengeRelayer is IMessageRelayer {
 
     constructor(address _inbox, address _outbox) {
       inbox = IMailbox(_inbox);
@@ -25,18 +25,18 @@ contract Messenger is IMessageRecipient {
 
     IMailbox outbox;
 
-    function sendMessage(uint32 _destinationDomain, bytes32 _recipient, string calldata _message) external {
-      outbox.dispatch(_destinationDomain, _recipient, bytes(_message));
-      emit SentMessage(_destinationDomain, _recipient, _message);
+    function sendCrosschainMessage(uint256 destChain, address destAddress, uint256 _message) external {
+      //outbox.dispatch(destChain, destAddress, bytes(_message));
+      //emit SentMessage(destChain, destAddress, _message);
     }
     event SentMessage(uint32 destinationDomain, bytes32 recipient, string message);
 
     IMailbox inbox;
 
-    function handle(uint32 _origin, bytes32 _sender, bytes calldata _message) external payable {
+    function onCrosschainMessage(uint256 destChain, address destAddress, uint256 amount) external {
 
 
-      emit ReceivedMessage(_origin, _sender, _message);
+      //emit ReceivedMessage(_origin, _sender, _message);
     }
     event ReceivedMessage(uint32 origin, bytes32 sender, bytes message);
 

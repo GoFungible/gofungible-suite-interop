@@ -2,7 +2,14 @@
   "name": "gofungible-suite-interop",
   "version": "1.0.0",
   "type": "module",
-	"dependencies": {
+  "scripts": {
+    "build": "hardhat compile",
+    "deploy": "hardhat run scripts/deploy.ts",
+    "interact": "hardhat run scripts/interact.ts",
+    "test": "hardhat test",
+    "node": "hardhat node"
+  },
+  "dependencies": {
     "gofungible-erc-20-multichain-relayer-extension": "github:GoFungible/gofungible-erc-20-multichain-relayer-extension"
   },
   "devDependencies": {
