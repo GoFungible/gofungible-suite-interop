@@ -3,10 +3,10 @@ pragma solidity 0.8.30;
 
 import "./interfaces/IMailbox.sol";
 import "./interfaces/IMessageRecipient.sol";
-import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/ISupplySyncer.sol";
+import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/ISupplySwapper.sol";
 
 // Hyperlane Warp Routes
-contract SupplySyncer is ISupplySyncer, IMessageRecipient {
+contract SupplySwapper is ISupplySwapper, IMessageRecipient {
 
 	constructor(address _outbox, address _inbox) {
 		outbox = IMailbox(_outbox);
@@ -14,17 +14,17 @@ contract SupplySyncer is ISupplySyncer, IMessageRecipient {
 	}
 
 	// *************************************************************************************************
-	// **************************************** Sync Supply ********************************************
+	// ******************************************** Swap ***********************************************
 	// *************************************************************************************************
 	IMailbox outbox;
 
-	function syncSupplies(uint256[] memory onChains, uint256 fromChain, uint256 toChain, uint256 amount) external {
+	function swap(uint256 destChain, address destAddress, uint256 amount) external {
 		//outbox.dispatch(_destinationDomain, _recipient, bytes(_message));
 		//emit SentMessage(_destinationDomain, _recipient, _message);
 	}
 
 	// *************************************************************************************************
-	// *********************************** Receive Sync Supply *****************************************
+	// ************************************** Receive Swap *********************************************
 	// *************************************************************************************************
 	IMailbox inbox;
 

@@ -2,37 +2,67 @@
 pragma solidity 0.8.30;
 
 import "./interfaces/IMailbox.sol";
+import "./interfaces/IMessageRecipient.sol";
 import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/ISupplyRelayer.sol";
 
 // Hyperlane Warp Routes
-contract SupplyRelayer is ISupplyRelayer {
+contract SupplyRelayer is ISupplyRelayer, IMessageRecipient {
 
-	constructor(address _inbox, address _outbox) {
-		inbox = IMailbox(_inbox);
+	mapping(bytes32 => bool) public processedMessages;
+	
+	mapping(uint32 => bytes32) public trustedSenders;
+
+	constructor(address _outbox, address _inbox) {
 		outbox = IMailbox(_outbox);
+		inbox = IMailbox(_inbox);
 	}
 
+	// *************************************************************************************************
+	// ************************************* Send Supply ***********************************************
+	// *************************************************************************************************
 	IMailbox outbox;
 
-	function onCrosschainSupply(uint256 destChain, address destAddress, uint256 amount)  external {
-
-		//emit ReceivedMessage(_origin, _sender, _message);
-	}
-	event ReceivedMessage(uint32 origin, bytes32 sender, bytes message);
-
-	IMailbox inbox;
-
-	function sendCrosschainSupply(uint256 destChain, address destAddress, uint256 amount) external {
+	function sendCrosschainSupply(uint256 destChain, address destAddress, uint256 amount) external override {
 		//outbox.dispatch(_destinationDomain, _recipient, bytes(_message));
 		//emit SentMessage(_destinationDomain, _recipient, _message);
 	}
-	//event SentMessage(uint32 destinationDomain, bytes32 recipient, string message);
 
-	function registerReceiver(address _receiver) external {
+	// *************************************************************************************************
+	// ************************************* Receive Supply ********************************************
+	// *************************************************************************************************
+	IMailbox inbox;
 
-	}
+	function handle(uint32 _origin, bytes32 _sender, bytes calldata _message) external payable override {
+		// 1. Prevent processing invalid messages
+		require(_origin > 0, "Invalid origin");
+		require(_sender != bytes32(0), "Invalid sender");
+		require(_message.length > 0, "Empty message");
 
-	function unregisterReceiver(address _receiver) external {
+		address fromAddress = address(uint160(uint256(_sender)));
+		require(fromAddress == address(inbox), "MailboxClient: sender not mailbox");
+		
+		// 2. Prevent replay attacks
+		bytes32 messageId = keccak256(abi.encodePacked(_origin, _sender, _message));
+		require(!processedMessages[messageId], "Message already processed");
+		processedMessages[messageId] = true;
+		
+		// 3. Decode the message payload
+		//string memory message = string(_message);
+		//IMultichainToken(fromAddress).onCrosschainSupply(_origin, fromAddress, message);
+
+		/*(address recipient, uint256 amount) = abi.decode(_body, (address, uint256));
+		require(recipient != address(0), "Invalid recipient");
+		require(amount > 0, "Amount must be > 0");
+		
+		// 4. Mint tokens to recipient on destination chain
+		token.mint(recipient, amount);
+		totalMinted += amount;
+		
+		emit TokensReceived(recipient, amount, messageId);*/
+
+		// 4. Emit event
+		emit SupplyRelayed(_origin, fromAddress, 0);
+
 
 	}
 
