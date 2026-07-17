@@ -44,7 +44,7 @@ contract MessengeRelayer is IMessageRelayer, IMessageRecipient {
 			messageBytes
 		);
 
-		//emit SentMessage(toChain, toAddress, message);
+		emit CrosschainMessageSent(toChain, toAddress, message);
 	}
 
 	// *************************************************************************************************
@@ -71,22 +71,7 @@ contract MessengeRelayer is IMessageRelayer, IMessageRecipient {
 		IMultichainToken(fromAddress).onCrosschainMessage(_origin, fromAddress, message);
 
 		// 4. Emit event
-		emit MessageRelayed(_origin, fromAddress, message);
-
-
-
-		/*(address recipient, uint256 amount) = abi.decode(_body, (address, uint256));
-		require(recipient != address(0), "Invalid recipient");
-		require(amount > 0, "Amount must be > 0");
-		
-		// 4. Mint tokens to recipient on destination chain
-		token.mint(recipient, amount);
-		totalMinted += amount;
-		
-		emit TokensReceived(recipient, amount, messageId);*/
-
-
-
+		emit CrosschainMessageReceived(_origin, fromAddress, message);
 
 	}
 

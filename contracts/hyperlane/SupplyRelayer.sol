@@ -23,8 +23,26 @@ contract SupplyRelayer is ISupplyRelayer, IMessageRecipient {
 	IMailbox outbox;
 
 	function sendCrosschainSupply(uint256 destChain, address destAddress, uint256 amount) external override {
-		//outbox.dispatch(_destinationDomain, _recipient, bytes(_message));
-		//emit SentMessage(_destinationDomain, _recipient, _message);
+		// 1. Convert the recipient address to bytes32
+		/*bytes32 recipient = bytes32(uint256(uint160(toAddress)));
+
+		bytes memory messageBytes = bytes(message);
+
+		// 2. Get the fee required for the dispatch
+		uint256 fee = outbox.quoteDispatch(
+			toChain,
+			recipient,
+			messageBytes
+		);
+
+		// 3. Dispatch the message, sending the fee as value
+		bytes32 messageId = outbox.dispatch{value: fee}(
+			toChain,
+			recipient,
+			messageBytes
+		);*/
+
+		emit CrosschainSupplySent(toChain, toAddress, message);
 	}
 
 	// *************************************************************************************************
@@ -61,7 +79,7 @@ contract SupplyRelayer is ISupplyRelayer, IMessageRecipient {
 		emit TokensReceived(recipient, amount, messageId);*/
 
 		// 4. Emit event
-		emit SupplyRelayed(_origin, fromAddress, 0);
+		emit CrosschainSupplyReceived(_origin, fromAddress, 0);
 
 
 	}
