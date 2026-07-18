@@ -22,7 +22,7 @@ contract SupplyRelayer is ISupplyRelayer, IMessageRecipient {
 	// *************************************************************************************************
 	IMailbox outbox;
 
-	function sendCrosschainSupply(uint256 destChain, address destAddress, uint256 amount) external override {
+	function sendCrosschainSupply(uint256 toChain, address toAddress, uint256 amount) external override {
 		// 1. Convert the recipient address to bytes32
 		/*bytes32 recipient = bytes32(uint256(uint160(toAddress)));
 
@@ -42,7 +42,7 @@ contract SupplyRelayer is ISupplyRelayer, IMessageRecipient {
 			messageBytes
 		);*/
 
-		emit CrosschainSupplySent(toChain, toAddress, message);
+		emit CrosschainSupplySent(toChain, toAddress, amount);
 	}
 
 	// *************************************************************************************************
