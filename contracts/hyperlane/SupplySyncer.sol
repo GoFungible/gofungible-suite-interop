@@ -18,7 +18,7 @@ contract SupplySyncer is ISupplySyncer, IMessageRecipient {
 	// *************************************************************************************************
 	IMailbox outbox;
 
-	function syncSupplies(uint256[] memory onChains, uint256 fromChain, uint256 toChain, uint256 amount, bytes32 checksum) external {
+	function syncSupplies(uint256 onChain, address onAddress, uint256 fromChain, uint256 toChain, uint256 amount, bytes32 checksum) external {
 		//outbox.dispatch(_destinationDomain, _recipient, bytes(_message));
 		//emit SentMessage(_destinationDomain, _recipient, _message);
 	}
