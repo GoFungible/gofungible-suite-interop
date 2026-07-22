@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.30;
 
-import "./interfaces/IMailbox.sol";
-import "./interfaces/IMessageRecipient.sol";
 import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
 import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
+
+import "./interfaces/IMailbox.sol";
+import "./interfaces/IMessageRecipient.sol";
 
 // Hyperlane GMP
 contract MessengeRelayer is IMessageRelayer, IMessageRecipient {
