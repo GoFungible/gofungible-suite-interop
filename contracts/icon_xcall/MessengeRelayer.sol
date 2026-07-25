@@ -12,7 +12,6 @@ contract MessengeRelayer is IMessageRelayer, IXCallReceiver {
 		xCallAddress = _xCallAddress;
 	}
 
-
 	function sendCrosschainMessage(uint32 toChain, address toAddress, string calldata message) external override {
 
 		bytes memory data = abi.encode(message);
