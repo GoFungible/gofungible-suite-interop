@@ -1,15 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.30;
 
-import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
-import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
-
-import "./erc-7786/IERC7786GatewaySource.sol";
-import "./erc-7786/IERC7786Recipient.sol";
+import "../erc-7786/IERC7786GatewaySource.sol";
+import "../erc-7786/IERC7786Recipient.sol";
 
 import "./interfaces/IDeBridgeGate.sol";
 
-contract MessengeRelayer is IMessageRelayer, IGmpTransferAdapter, IERC7786GatewaySource {
+contract MessengeRelayer is IERC7786GatewaySource {
 	
 	IDeBridgeGate public immutable deBridgeGate;
 
@@ -17,19 +14,15 @@ contract MessengeRelayer is IMessageRelayer, IGmpTransferAdapter, IERC7786Gatewa
 		deBridgeGate = IDeBridgeGate(_deBridgeGate);
 	}
 
-	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) [
+	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) {
 
-	]
-
-	function sendCrosschainMessage(uint32 toChain, address toAddress, string calldata message) external override {
-
-		deBridgeGate.sendMessage{value: msg.value}(
+		/*deBridgeGate.sendMessage{value: msg.value}(
 			toChain,
 			abi.encodePacked(toAddress),
 			bytes(message)
     );
 
-		emit CrosschainMessageSent(toChain, bytes32(toAddress), depositData);
+		emit CrosschainMessageSent(toChain, bytes32(toAddress), depositData);*/
 
 	}
 
@@ -41,9 +34,13 @@ contract MessengeRelayer is IMessageRelayer, IGmpTransferAdapter, IERC7786Gatewa
 			bytes calldata /* txnHash */,
 			uint256 /* srcChainIdFrom */,
 			address /* sender */,
-			IDeBridgeGate.SubmissionAutoParams memory /* autoParams */
-	) external onlyDebridgeCallProxy {
-			// +++ THIS IS WHERE YOUR CUSTOM LOGIC GOES +++
+			IDeBridgeGate.SubmissionAutoParamsTo memory /* autoParams */
+	) external {
+			
+			/*
+		IERC7786Recipient(fromAddress).receiveMessage(messageId, fromAddress, _message);
+
+			*/
 			
 
 	}

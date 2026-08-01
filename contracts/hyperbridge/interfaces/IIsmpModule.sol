@@ -16,7 +16,7 @@ pragma solidity 0.8.30;
 import {PostRequest, PostResponse, GetResponse, GetRequest} from "./Message.sol";
 import {DispatchPost, DispatchPostResponse, DispatchGet, IDispatcher} from "./IDispatcher.sol";
 
-import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {IERC20} from "./IERC20.sol";
 
 struct IncomingPostRequest {
 	// The Post request

@@ -1,16 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.30;
 
-import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
-import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
-
-import "./erc-7786/IERC7786GatewaySource.sol";
-import "./erc-7786/IERC7786Recipient.sol";
+import "../erc-7786/IERC7786GatewaySource.sol";
+import "../erc-7786/IERC7786Recipient.sol";
 
 import "./interfaces/IAxelarGateway.sol";
 import "./interfaces/IAxelarGasService.sol";
 
-contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
+contract MessengeRelayer is IERC7786GatewaySource {
 	
 	IAxelarGateway public gateway;
 
@@ -33,9 +30,7 @@ contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 		chainIdToName[10] = "optimism";
 	}
 
-	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) [
 
-	]
 
 	function getAxelarChainName(uint256 chainId) public view returns (string memory) {
 		string memory name = chainIdToName[chainId];
@@ -43,9 +38,10 @@ contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 		return name;
 	}
 
-	function sendCrosschainMessage(uint32 toChain, address toAddress, string calldata message) external override {
+	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) {
 
-		string memory _destinationChain = getAxelarChainName(toChain);
+
+		/*string memory _destinationChain = getAxelarChainName(toChain);
 
 		string memory _destinationAddress = toAddress.toString();
 
@@ -56,7 +52,7 @@ contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 			_destinationChain,
 			_destinationAddress,
 			payload
-		);
+		);*/
 
 	}
 
@@ -69,15 +65,15 @@ contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 			bytes memory payload
 	) external {
 		// Ensure this call comes from the Axelar Gateway
-		require(msg.sender == address(gateway), "Not from Axelar Gateway");
+		/*require(msg.sender == address(gateway), "Not from Axelar Gateway");
 
 		string fromChain = sourceChain;
 		address fromAddress = address(bytes20(bytes32(bytes.concat(new bytes(12), hex"000000000000000000000000", bytes(sourceAddress))))); // Truncate sourceAddress
 		string message = abi.decode(payload, (string));
 
-		IMultichainToken(fromAddress).onCrosschainMessage(fromChain, fromAddress, message);
+		IERC7786Recipient(fromAddress).receiveMessage(messageId, fromAddress, _message);
 
-		emit CrosschainMessageReceived(fromChain, fromAddress, message);
+		emit CrosschainMessageReceived(fromChain, fromAddress, message);*/
 	}
 
 }

@@ -13,7 +13,7 @@
 // limitations under the License.
 pragma solidity ^0.8.17;
 
-import {PostRequest, GetResponse, GetRequest} from "../libraries/Message.sol";
+import {PostRequest, GetResponse, GetRequest} from "./Message.sol";
 
 /**
  * @title IncomingPostRequest

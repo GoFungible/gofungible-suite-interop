@@ -1,15 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.30;
 
-import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
-import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
-
-import "./erc-7786/IERC7786GatewaySource.sol";
-import "./erc-7786/IERC7786Recipient.sol";
+import "../erc-7786/IERC7786GatewaySource.sol";
+import "../erc-7786/IERC7786Recipient.sol";
 
 import "./interfaces/ZetaMPI.sol";
+import "./interfaces/ZetaInterfaces.sol";
 
-contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
+contract MessengeRelayer is IERC7786GatewaySource {
 	
 	ZetaMPI public zeta;
 
@@ -17,11 +15,9 @@ contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 		zeta = ZetaMPI(_zeta);
 	}
 
-	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) [
+	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) {
 
-	]
-
-	function sendCrosschainMessage(uint32 toChain, address toAddress, string calldata message) external override {
+/*
 
 		zeta.send(
 			ZetaInterfaces.SendInput({
@@ -35,19 +31,21 @@ contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 		);
 
 		emit CrosschainMessageSent(toChain, toAddress, message);
+		*/
 
 	}
 
 	function onZetaMessage(ZetaInterfaces.ZetaMessage calldata _zetaMessage) external { 
 
-
+/*
 
 		// 3. Decode the message payload
 		string memory message = string(_message);
-		IMultichainToken(fromAddress).onCrosschainMessage(_origin, fromAddress, message);
+					IERC7786Recipient(fromAddress).receiveMessage(messageId, fromAddress, _message);
 
 		// 4. Emit event
 		emit CrosschainMessageReceived(_origin, fromAddress, message);
+		*/
 	}
 
 }

@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.30;
 
-import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
-import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
+import "../erc-7786/IERC7786GatewaySource.sol";
+import "../erc-7786/IERC7786Recipient.sol";
 
-import "./erc-7786/IERC7786GatewaySource.sol";
-import "./erc-7786/IERC7786Recipient.sol";
+import "./interfaces/ILayerZeroReceiver.sol";
+import "./interfaces/ILayerZeroEndpoint.sol";
 
-contract MessengeRelayer is IMessageRelayer, ILayerZeroReceiver, IERC7786GatewaySource {
+contract MessengeRelayer is IERC7786GatewaySource, ILayerZeroReceiver {
 	
 	ILayerZeroEndpoint public endpoint;
 
@@ -15,11 +15,7 @@ contract MessengeRelayer is IMessageRelayer, ILayerZeroReceiver, IERC7786Gateway
 		endpoint = ILayerZeroEndpoint(_endpoint);
 	}
 
-	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) [
-
-	]
-
-	function sendCrosschainMessage(uint32 toChain, address toAddress, string calldata message) external override {
+	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) {
 
 		/* interface ILayerZeroEndpoint {
 				function send(
@@ -30,7 +26,7 @@ contract MessengeRelayer is IMessageRelayer, ILayerZeroReceiver, IERC7786Gateway
 						address _zroPaymentAddress,   // Dedicated ZRO token payment address
 						bytes calldata _adapterParams  // Monolithic configurations (Gas, etc.)
 				) external payable;
-		} */
+		} 
 
 		endpoint.send{value: msg.value}(
 			toChain,
@@ -41,11 +37,11 @@ contract MessengeRelayer is IMessageRelayer, ILayerZeroReceiver, IERC7786Gateway
 			bytes("")
 		);
 
-		emit CrosschainMessageSent(toChain, toAddress, message);
+		emit CrosschainMessageSent(toChain, toAddress, message);*/
 	}
 
 	function lzReceive(uint16 _srcChainId, bytes calldata _srcAddress, uint64 _nonce, bytes calldata _payload) external override {
-		require(msg.sender == address(endpoint));
+		/*require(msg.sender == address(endpoint));
 		address fromAddress;
 		assembly {
 				fromAddress := mload(add(_srcAddress, 20))
@@ -61,8 +57,9 @@ contract MessengeRelayer is IMessageRelayer, ILayerZeroReceiver, IERC7786Gateway
 					bytes("")
 			);
 		}
+			IERC7786Recipient(fromAddress).receiveMessage(messageId, fromAddress, _message);
 
-		emit CrosschainMessageReceived(_srcChainId, fromAddress, string(_payload));
+		emit CrosschainMessageReceived(_srcChainId, fromAddress, string(_payload));*/
 
 	}
 

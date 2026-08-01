@@ -1,13 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.30;
 
-import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
-import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
+import "../erc-7786/IERC7786GatewaySource.sol";
+import "../erc-7786/IERC7786Recipient.sol";
 
-import "./erc-7786/IERC7786GatewaySource.sol";
-import "./erc-7786/IERC7786Recipient.sol";
-
-contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
+contract MessengeRelayer is IERC7786GatewaySource {
 
 	// The official Celer MessageBus address on the source chain
 	address public immutable messageBus;
@@ -17,9 +14,10 @@ contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 		messageBus = _messageBus;
 	}
 
-	function sendCrosschainMessage(uint32 toChain, address toAddress, string calldata message) external override {
+	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) {
+
 		// High-utility safety check ensuring gas fee is attached
-		require(msg.value > 0, "Celer requires native fee for cross-chain execution");
+		/*require(msg.value > 0, "Celer requires native fee for cross-chain execution");
 
 		// Execute directly on the native Celer MessageBus contract 
 		IMessageBus(messageBus).sendMessage{value: msg.value}(
@@ -28,7 +26,7 @@ contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 			_payload
 		);
 
-		emit CustomMessageSent(_receiver, _dstChainId, _payload);
+		emit CustomMessageSent(_receiver, _dstChainId, _payload);*/
 	}
 
 	/**
@@ -45,7 +43,7 @@ contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 			address // executor
 	) external payable returns (uint256) {
 			// Security Check 1: Ensure ONLY the official Celer MessageBus is calling this function
-			require(msg.sender == messageBus, "Execution restricted to Celer MessageBus");
+			/*require(msg.sender == messageBus, "Execution restricted to Celer MessageBus");
 
 			// Security Check 2: Verify the message comes from your trusted source contract
 			//require(_sender == trustedSender, "Untrusted source sender");
@@ -58,13 +56,13 @@ contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 
 			// 3. Decode the message payload
 			string memory message = string(_message);
-			IMultichainToken(fromAddress).onCrosschainMessage(_srcChainId, _sender, _text);
+			IERC7786Recipient(fromAddress).receiveMessage(messageId, fromAddress, _message);
 
 			// 4. Emit event
 			emit CrosschainMessageReceived(_srcChainId, _sender, _text);
 
 			// Celer execution status enum: 0 = Success, 1 = Fail, 2 = Retry
-			return 0; 
+			return 0; */
 	}
 
 }

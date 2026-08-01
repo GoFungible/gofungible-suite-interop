@@ -1,15 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.30;
 
-import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
-import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
+import "../erc-7786/IERC7786GatewaySource.sol";
+import "../erc-7786/IERC7786Recipient.sol";
 
-import "./erc-7786/IERC7786GatewaySource.sol";
-import "./erc-7786/IERC7786Recipient.sol";
-
+import "./interfaces/IWormholeRelayer.sol";
 import "./interfaces/IWormholeReceiver.sol";
 
-contract MessengeRelayer is IMessageRelayer, IWormholeReceiver, IERC7786GatewaySource {
+contract MessengeRelayer is IERC7786GatewaySource, IWormholeReceiver {
 	
 	IWormholeRelayer public wormholeRelayer;
 	uint256 constant GAS_LIMIT = 50000;
@@ -18,9 +16,7 @@ contract MessengeRelayer is IMessageRelayer, IWormholeReceiver, IERC7786GatewayS
 		wormholeRelayer = IWormholeRelayer(_wormholeRelayer);
 	}
 
-	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) [
 
-	]
 
 	function quoteCrossChainCost(
 			uint16 targetChain
@@ -33,9 +29,9 @@ contract MessengeRelayer is IMessageRelayer, IWormholeReceiver, IERC7786GatewayS
 	}
 
 
-	function sendCrosschainMessage(uint32 toChain, address toAddress, string calldata message) external override {
+	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) {
 
-		uint256 cost = quoteCrossChainCost(targetChain);
+		/*uint256 cost = quoteCrossChainCost(targetChain);
 
 		require(msg.value >= cost, "Insufficient funds for cross-chain delivery");
 
@@ -47,7 +43,7 @@ contract MessengeRelayer is IMessageRelayer, IWormholeReceiver, IERC7786GatewayS
 				GAS_LIMIT
 		);
 
-		emit CrosschainMessageSent(toChain, toAddress, message);
+		emit CrosschainMessageSent(toChain, toAddress, message);*/
 
 	}
 
@@ -59,7 +55,7 @@ contract MessengeRelayer is IMessageRelayer, IWormholeReceiver, IERC7786GatewayS
 			uint16 sourceChain,
 			bytes32
 	) public payable override {
-			require(
+			/*require(
 					msg.sender == address(wormholeRelayer),
 					"Only the Wormhole relayer can call this function"
 			);
@@ -68,10 +64,11 @@ contract MessengeRelayer is IMessageRelayer, IWormholeReceiver, IERC7786GatewayS
 			string memory message = abi.decode(payload, (string));
 
 			// 3. Decode the message payload
-			IMultichainToken(fromAddress).onCrosschainMessage(sourceChain, sourceAddress, message);
+			//IMultichainToken(fromAddress).onCrosschainMessage(sourceChain, sourceAddress, message);
+					IERC7786Recipient(fromAddress).receiveMessage(messageId, fromAddress, _message);
 
 			// 4. Emit event
-			emit CrosschainMessageReceived(sourceChain, sourceAddress, message);
+			emit CrosschainMessageReceived(sourceChain, sourceAddress, message);*/
 	}
 
 }

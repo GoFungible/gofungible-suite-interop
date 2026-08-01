@@ -2,6 +2,10 @@
 pragma solidity 0.8.30;
 
 interface IXCallReceiver {
+
+
+	function handleCallMessage(string memory _from, bytes[]memory _data) external;
+
 	/**
 	 * Handles the call message received from the source chain.
 	 * Only called from the Call Message Service.
@@ -10,6 +14,5 @@ interface IXCallReceiver {
 	 * @param _data The calldata delivered from the caller
 	 * @param _protocols The contract addresses that delivered the data, if omitted the default protocol was used
 	 */
-	external handleCallMessage(String _from, byte[] _data);
-	external handleCallMessage(String _from, byte[] _data, @Optional String[] _protocols);
+	function handleCallMessage(string memory _from, bytes[] memory _data, string[] memory _protocols) external;
 }

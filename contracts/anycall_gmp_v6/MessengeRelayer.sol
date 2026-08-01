@@ -1,15 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.30;
 
-import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
-import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
-
-import "./erc-7786/IERC7786GatewaySource.sol";
-import "./erc-7786/IERC7786Recipient.sol";
+import "../erc-7786/IERC7786GatewaySource.sol";
+import "../erc-7786/IERC7786Recipient.sol";
 
 import "./interfaces/IAnycallV6Proxy.sol";
 
-contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
+contract MessengeRelayer is IERC7786GatewaySource {
 
 	// Anycall proxy contract
 	IAnycallV6Proxy public anycallProxy;
@@ -22,11 +19,9 @@ contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
     anycallProxy = IAnycallV6Proxy(_anycallProxy);
 	}
 
-	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) [
+	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) {
 
-	]
-
-	function sendCrosschainMessage(uint32 toChain, address toAddress, string calldata message) external override {
+		/*
 
 		// Encode the function call for destination
 		bytes memory callData = abi.encodeWithSignature(
@@ -48,28 +43,33 @@ contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 			2,                   // flags: 0 - pay on dest, 2 - pay on source
 			""                   // extra data (for fallback)
 		);
+
+		*/
         
 	}
 
 	/**
 	 * @dev Receive cross-chain messages (called by Anycall proxy)
-	 * @param fromChainId Source chain ID
-	 * @param sender Sender address on source chain
 	 * @param data Encoded message data
 	 */
-	function anyExecute(bytes calldata data) external override returns (bool success, bytes memory result) {
+	function anyExecute(bytes calldata data) external returns (bool success, bytes memory result) {
+
+		/*
+
     require(msg.sender == address(anycallProxy), "Only Anycall proxy can call");
 
 		// Decode the incoming data
 		(uint256 fromChainId, address sender, string memory message) = 
 				abi.decode(data, (uint256, address, string));
 
-		IMultichainToken(sender).onCrosschainMessage(fromChainId, sender, message);
+		IERC7786Recipient(fromAddress).receiveMessage(messageId, fromAddress, _message);
 
 		emit CrosschainMessageReceived(fromChain, fromAddress, message);
 
 		// Return success status and optional return data
     return (true, "");
+
+		*/
 	}
 
 }

@@ -1,17 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.30;
 
-import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
-import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
-
-import "./erc-7786/IERC7786GatewaySource.sol";
-import "./erc-7786/IERC7786Recipient.sol";
+import "../erc-7786/IERC7786GatewaySource.sol";
+import "../erc-7786/IERC7786Recipient.sol";
 
 import "./interfaces/IBCAppCallbacks.sol";
 import "./interfaces/IICS26Router.sol";
 import "./interfaces/IBCMsgs.sol";
 
-contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
+contract MessengeRelayer is  IERC7786GatewaySource {
 
   // Core IBC Routing Router on the EVM Chain
   IICS26Router public immutable ibcRouter;
@@ -21,14 +18,10 @@ contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 		ibcRouter = IICS26Router(_ibcRouter);
 	}
 
-	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) [
-
-	]
-	
-	function sendCrosschainMessage(uint32 toChain, address toAddress, string calldata message) external override {
+	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) {
 
 		// 1. Instantiate the struct matching your Cosmos payload architecture
-		CustomPacketData memory packetData = CustomPacketData({
+		/*CustomPacketData memory packetData = CustomPacketData({
 				creator: creator,
 				message: message
 		});
@@ -45,17 +38,17 @@ contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 		});
 
 		// 4. Dispatch the packet to the core router out to the Relayer network
-		uint64 sequence = ibcRouter.sendPacket(msgSend);
+		uint64 sequence = ibcRouter.sendPacket(msgSend);*/
 
 	}
 
 	/**
 	 * @notice Callback invoked by the core IBC router when a packet is routed to this app
 	 */
-	function onRecvPacket(IBCMsgs.Packet calldata packet, address relayer) external override returns (bytes memory) {
+	function onRecvPacket(IBCMsgs.Packet calldata packet, address relayer) external returns (bytes memory) {
 
 		// Enforce security: Only allow the authorized Core IBC Router to trigger callbacks
-		require(msg.sender == address(ibcRouter), "Unauthorized execution caller");
+		/*require(msg.sender == address(ibcRouter), "Unauthorized execution caller");
 
 		// 1. EVM Codec Step: Decode the raw payload back into the structural entity
 		(CustomPacketData memory decodedData) = abi.decode(packet.payload, (CustomPacketData));
@@ -64,10 +57,11 @@ contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 		require(bytes(decodedData.creator).length > 0, "Codec Error: Empty creator field");
 
 		emit PacketReceived(packet.sequence, decodedData.creator, decodedData.message);
+		IERC7786Recipient(fromAddress).receiveMessage(messageId, fromAddress, _message);
 
 		// 4. Create and ABI-encode a successful Acknowledgement response
 		bytes memory successAck = abi.encode("success");
-		return successAck;
+		return successAck;*/
 	}
 
 }

@@ -13,9 +13,9 @@ interface IXCall {
 	 *
 	 * @return The serial number of the request
 	 */
-	payable external sendCallMessage(String _to,
-																	byte[] _data,
-																	@Optional bytes _rollback,
-																	@Optional String[] _sources
-																	@Optional String[] _destinations) return Integer;
+	 function sendCallMessage(string memory _to,
+																	bytes[] memory _data,
+																	bytes memory _rollback,
+																	string[] memory _sources,
+																	string[] memory _destinations) external payable returns (uint256);
 }

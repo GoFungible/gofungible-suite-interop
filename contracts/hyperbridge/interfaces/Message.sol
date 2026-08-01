@@ -15,8 +15,8 @@ pragma solidity ^0.8.17;
 
 // https://github.com/polytope-labs/hyperbridge/blob/main/sdk/packages/core/contracts/libraries/Message.sol
 
-import {StorageValue} from "@polytope-labs/solidity-merkle-trees/src/trie/Node.sol";
-import {StateMachineHeight} from "../interfaces/IConsensusV2.sol";
+import {StorageValue} from "./Node.sol";
+import {StateMachineHeight} from "./IConsensusV2.sol";
 
 /**
  * @title FrozenStatus
@@ -55,6 +55,30 @@ struct PostRequest {
 	/// @notice Request payload to be delivered to the destination
 	bytes body;
 }
+
+// invented check this
+/**
+ * @title PostResponse
+ * @notice Represents a cross-chain message request
+ * @dev Contains all necessary information for routing and processing a cross-chain message
+ */
+struct PostResponse {
+	/// @notice Source chain identifier (e.g., "POLKADOT-1000", "EVM-1")
+	bytes source;
+	/// @notice Destination chain identifier
+	bytes dest;
+	/// @notice Unique nonce for this request on the source chain
+	uint64 nonce;
+	/// @notice Source application address that initiated this request
+	bytes from;
+	/// @notice Destination application address to receive this request
+	bytes to;
+	/// @notice Unix timestamp when this request expires
+	uint64 timeoutTimestamp;
+	/// @notice Request payload to be delivered to the destination
+	bytes body;
+}
+
 
 /**
  * @title GetRequest

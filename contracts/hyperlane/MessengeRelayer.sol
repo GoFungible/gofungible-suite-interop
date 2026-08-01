@@ -1,17 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.30;
 
-import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
-import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
-
-import "./erc-7786/IERC7786GatewaySource.sol";
-import "./erc-7786/IERC7786Recipient.sol";
+import "../erc-7786/IERC7786GatewaySource.sol";
+import "../erc-7786/IERC7786Recipient.sol";
 
 import "./interfaces/IMailbox.sol";
 import "./interfaces/IMessageRecipient.sol";
 
 // Hyperlane GMP
-contract MessengeRelayer is IMessageRelayer, IMessageRecipient, IERC7786GatewaySource {
+contract MessengeRelayer is IERC7786GatewaySource, IMessageRecipient {
 
 	mapping(bytes32 => bool) public processedMessages;
 	
@@ -22,19 +19,15 @@ contract MessengeRelayer is IMessageRelayer, IMessageRecipient, IERC7786GatewayS
 		inbox = IMailbox(_inbox);
 	}
 
-	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) [
-
-	]
-
 	// *************************************************************************************************
 	// ************************************* Send Message **********************************************
 	// *************************************************************************************************
 	IMailbox outbox;
 
-	function sendCrosschainMessage(uint32 toChain, address toAddress, string calldata message) external override {
+	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) {
 
 		// 1. Convert the recipient address to bytes32
-		bytes32 recipient = bytes32(uint256(uint160(toAddress)));
+		/*bytes32 recipient = bytes32(uint256(uint160(toAddress)));
 
 		bytes memory messageBytes = bytes(message);
 
@@ -52,7 +45,8 @@ contract MessengeRelayer is IMessageRelayer, IMessageRecipient, IERC7786GatewayS
 			messageBytes
 		);
 
-		emit CrosschainMessageSent(toChain, toAddress, message);
+		emit MessageSent(toChain, toAddress, message);*/
+
 	}
 
 	// *************************************************************************************************
@@ -61,8 +55,9 @@ contract MessengeRelayer is IMessageRelayer, IMessageRecipient, IERC7786GatewayS
 	IMailbox inbox;
 
 	function handle(uint32 _origin, bytes32 _sender, bytes calldata _message) external payable override {
+
 		// 1. Prevent processing invalid messages
-		require(_origin > 0, "Invalid origin");
+		/*require(_origin > 0, "Invalid origin");
 		require(_sender != bytes32(0), "Invalid sender");
 		require(_message.length > 0, "Empty message");
 
@@ -75,11 +70,10 @@ contract MessengeRelayer is IMessageRelayer, IMessageRecipient, IERC7786GatewayS
 		processedMessages[messageId] = true;
 		
 		// 3. Decode the message payload
-		string memory message = string(_message);
-		IMultichainToken(fromAddress).onCrosschainMessage(_origin, fromAddress, message);
+		IERC7786Recipient(fromAddress).receiveMessage(messageId, fromAddress, _message);
 
 		// 4. Emit event
-		emit CrosschainMessageReceived(_origin, fromAddress, message);
+		emit CrosschainMessageReceived(_origin, fromAddress, message);*/
 
 	}
 

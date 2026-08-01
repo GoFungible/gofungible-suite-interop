@@ -1,16 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.30;
 
-import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
-import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
-
-import "./erc-7786/IERC7786GatewaySource.sol";
-import "./erc-7786/IERC7786Recipient.sol";
+import "../erc-7786/IERC7786GatewaySource.sol";
+import "../erc-7786/IERC7786Recipient.sol";
 
 import "./interfaces/IDispatcher.sol";
 import "./interfaces/IApp.sol";
 
-contract MessengeRelayer is IMessageRelayer, IApp, IERC7786GatewaySource {
+contract MessengeRelayer is IERC7786GatewaySource, IApp {
 	
 	// The Hyperbridge Host (or Dispatcher) contract on the local chain
 	IDispatcher public immutable dispatcher;
@@ -19,11 +16,9 @@ contract MessengeRelayer is IMessageRelayer, IApp, IERC7786GatewaySource {
 		dispatcher = IDispatcher(_dispatcher);
 	}
 
-	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) [
+	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) {
 
-	]
-
-	function sendCrosschainMessage(uint32 toChain, address toAddress, string calldata message) external override {
+		/*
 
 		// 1. Encode the string message into a raw byte payload
 		bytes memory payload = abi.encode(message);
@@ -43,6 +38,8 @@ contract MessengeRelayer is IMessageRelayer, IApp, IERC7786GatewaySource {
 
 		emit CrosschainMessageSent(toChain, toAddress, message);
 
+		*/
+
 	}
 
 	/**
@@ -55,9 +52,38 @@ contract MessengeRelayer is IMessageRelayer, IApp, IERC7786GatewaySource {
 		// Note: The parent module or your local architecture typically validates the msg.sender
 		
 		// Decode the data exactly how it was packaged on the source chain
+		/*
 		string memory decodedMessage = abi.decode(request.body, (string));
+		IERC7786Recipient(fromAddress).receiveMessage(messageId, fromAddress, _message);
 
 		emit MessageReceived(decodedMessage);
+
+		*/
+	}
+
+
+	/**
+	 * @dev Called by the `Host` to notify an app of a get response to a previously sent out request
+	 * @param incoming get response
+	 */
+	function onGetResponse(IncomingGetResponse memory incoming) external {
+
+	}
+
+	/**
+	 * @dev Called by the `Host` to notify an app of post requests that were previously sent but have now timed-out
+	 * @param incoming post request timeout
+	 */
+	function onPostRequestTimeout(PostRequestTimeout memory incoming) external {
+
+	}
+
+	/**
+	 * @dev Called by the `Host` to notify an app of get requests that were previously sent but have now timed-out
+	 * @param incoming get request timeout
+	 */
+	function onGetTimeout(GetRequestTimeout memory incoming) external {
+		
 	}
 
 }

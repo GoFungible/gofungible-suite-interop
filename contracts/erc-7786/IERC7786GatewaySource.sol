@@ -13,7 +13,7 @@ interface IERC7786GatewaySource {
 
 	error UnsupportedAttribute(bytes4 selector);
 
-	function supportsAttribute(bytes4 selector) external view returns (bool);
+	//function supportsAttribute(bytes4 selector) external view returns (bool);
 
 	function sendMessage(
 			bytes calldata recipient, // Binary Interoperable Address

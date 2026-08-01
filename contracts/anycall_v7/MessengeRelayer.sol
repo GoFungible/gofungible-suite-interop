@@ -1,33 +1,27 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.30;
 
-import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
-import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
+import "../erc-7786/IERC7786GatewaySource.sol";
+import "../erc-7786/IERC7786Recipient.sol";
 
-import "./erc-7786/IERC7786GatewaySource.sol";
-import "./erc-7786/IERC7786Recipient.sol";
+import "./interfaces/IAnyCallProxyV7.sol";
 
-import "./interfaces/IAnycallV7Proxy.sol";
-
-contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
+contract MessengeRelayer is IERC7786GatewaySource {
 
 	// Anycall proxy contract
-	IAnycallV7Proxy public anycallProxy;
+	IAnyCallProxyV7 public anycallProxy;
 
 	/**
 	 * @dev Constructor
 	 * @param _anycallProxy The Anycall V6 proxy contract address
 	 */
 	constructor(address _anycallProxy) {
-    anycallProxy = IAnycallV7Proxy(_anycallProxy);
+    anycallProxy = IAnyCallProxyV7(_anycallProxy);
 	}
 
-	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) [
+	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) {
 
-	]
-
-	function sendCrosschainMessage(uint32 toChain, address toAddress, string calldata message) external override {
-
+		/*
 
 		anycallProxy.anyCall{value: msg.value}(
 			toAddress, 														//Destination Contract Address
@@ -40,32 +34,38 @@ contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 			);
 		}
 
+		*/
+
 	}
 
-    /**
-     * @notice The core v7 receiving function executed by the anyCall relayers.
-     * @param data The ABI-encoded payload sent from the source chain.
-     */
-    function anyExecute(bytes calldata data) external returns (bool success, bytes memory result) {
-			// Security Check 1: Ensure ONLY the official anyCall executor is calling this function
-			require(msg.sender == anycallExecutor, "Client: Only Executor allowed");
+	/**
+	 * @notice The core v7 receiving function executed by the anyCall relayers.
+	 * @param data The ABI-encoded payload sent from the source chain.
+	 */
+	function anyExecute(bytes calldata data) external returns (bool success, bytes memory result) {
 
-			// Fetch the cross-chain execution context from the executor
-			(address from, uint256 fromChainId, ) = IAnycallExecutorV7(anycallExecutor).context();
+		/*
+		// Security Check 1: Ensure ONLY the official anyCall executor is calling this function
+		require(msg.sender == anycallExecutor, "Client: Only Executor allowed");
 
-			// Security Check 2: Verify the message comes from your trusted source contract and chain
-			require(from == trustedSourceContract, "Client: Untrusted source contract");
-			require(fromChainId == trustedSourceChainId, "Client: Untrusted source chain");
+		// Fetch the cross-chain execution context from the executor
+		(address from, uint256 fromChainId, ) = IAnycallExecutorV7(anycallExecutor).context();
 
-			// Decode the payload parameters (must match the layout packed on the source chain)
-			(string memory _msg, uint256 _val) = abi.decode(data, (string, uint256));
+		// Security Check 2: Verify the message comes from your trusted source contract and chain
+		require(from == trustedSourceContract, "Client: Untrusted source contract");
+		require(fromChainId == trustedSourceChainId, "Client: Untrusted source chain");
 
-			IMultichainToken(sender).onCrosschainMessage(fromChainId, from, _msg);
+		// Decode the payload parameters (must match the layout packed on the source chain)
+		(string memory _msg, uint256 _val) = abi.decode(data, (string, uint256));
 
-			emit CrosschainMessageReceived(fromChain, from, _msg);
+		IERC7786Recipient(fromAddress).receiveMessage(messageId, fromAddress, _message);
 
-			// Return success status and optional return data
-			return (true, "");
-    }
+		emit CrosschainMessageReceived(fromChain, from, _msg);
+
+		// Return success status and optional return data
+		return (true, "");
+
+		*/
+	}
 
 }
