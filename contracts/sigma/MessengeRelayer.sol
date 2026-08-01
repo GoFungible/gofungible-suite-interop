@@ -4,15 +4,22 @@ pragma solidity 0.8.30;
 import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
 import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
 
+import "./erc-7786/IERC7786GatewaySource.sol";
+import "./erc-7786/IERC7786Recipient.sol";
+
 import "./interfaces/IGmpTransferAdapter.sol";
 
-contract MessengeRelayer is IMessageRelayer, IGmpTransferAdapter {
+contract MessengeRelayer is IMessageRelayer, IGmpTransferAdapter, IERC7786GatewaySource {
 	
 	address public bridgeAddress;
 
 	constructor(address _bridge) {
 		bridgeAddress = _bridge;
 	}
+
+	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) [
+
+	]
 
 	function sendCrosschainMessage(uint32 toChain, address toAddress, string calldata message) external override {
 

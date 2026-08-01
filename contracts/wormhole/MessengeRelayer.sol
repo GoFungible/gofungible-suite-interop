@@ -4,9 +4,12 @@ pragma solidity 0.8.30;
 import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
 import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
 
+import "./erc-7786/IERC7786GatewaySource.sol";
+import "./erc-7786/IERC7786Recipient.sol";
+
 import "./interfaces/IWormholeReceiver.sol";
 
-contract MessengeRelayer is IMessageRelayer, IWormholeReceiver {
+contract MessengeRelayer is IMessageRelayer, IWormholeReceiver, IERC7786GatewaySource {
 	
 	IWormholeRelayer public wormholeRelayer;
 	uint256 constant GAS_LIMIT = 50000;
@@ -14,6 +17,10 @@ contract MessengeRelayer is IMessageRelayer, IWormholeReceiver {
 	constructor(address _wormholeRelayer) {
 		wormholeRelayer = IWormholeRelayer(_wormholeRelayer);
 	}
+
+	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) [
+
+	]
 
 	function quoteCrossChainCost(
 			uint16 targetChain

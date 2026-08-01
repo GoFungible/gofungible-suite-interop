@@ -4,11 +4,14 @@ pragma solidity 0.8.30;
 import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
 import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
 
+import "./erc-7786/IERC7786GatewaySource.sol";
+import "./erc-7786/IERC7786Recipient.sol";
+
 import "./interfaces/IMailbox.sol";
 import "./interfaces/IMessageRecipient.sol";
 
 // Hyperlane GMP
-contract MessengeRelayer is IMessageRelayer, IMessageRecipient {
+contract MessengeRelayer is IMessageRelayer, IMessageRecipient, IERC7786GatewaySource {
 
 	mapping(bytes32 => bool) public processedMessages;
 	
@@ -18,6 +21,10 @@ contract MessengeRelayer is IMessageRelayer, IMessageRecipient {
 		outbox = IMailbox(_outbox);
 		inbox = IMailbox(_inbox);
 	}
+
+	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) [
+
+	]
 
 	// *************************************************************************************************
 	// ************************************* Send Message **********************************************

@@ -4,7 +4,10 @@ pragma solidity 0.8.30;
 import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
 import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
 
-contract MessengeRelayer is IMessageRelayer {
+import "./erc-7786/IERC7786GatewaySource.sol";
+import "./erc-7786/IERC7786Recipient.sol";
+
+contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 
 	// The official Celer MessageBus address on the source chain
 	address public immutable messageBus;

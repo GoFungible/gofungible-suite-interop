@@ -4,10 +4,13 @@ pragma solidity 0.8.30;
 import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
 import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
 
+import "./erc-7786/IERC7786GatewaySource.sol";
+import "./erc-7786/IERC7786Recipient.sol";
+
 import "./interfaces/IDispatcher.sol";
 import "./interfaces/IApp.sol";
 
-contract MessengeRelayer is IMessageRelayer, IApp {
+contract MessengeRelayer is IMessageRelayer, IApp, IERC7786GatewaySource {
 	
 	// The Hyperbridge Host (or Dispatcher) contract on the local chain
 	IDispatcher public immutable dispatcher;
@@ -15,6 +18,10 @@ contract MessengeRelayer is IMessageRelayer, IApp {
 	constructor(address _dispatcher) {
 		dispatcher = IDispatcher(_dispatcher);
 	}
+
+	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) [
+
+	]
 
 	function sendCrosschainMessage(uint32 toChain, address toAddress, string calldata message) external override {
 

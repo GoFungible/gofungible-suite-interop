@@ -4,11 +4,14 @@ pragma solidity 0.8.30;
 import "gofungible-erc-20-multichain-relayer-extension/contracts/relayers/IMessageRelayer.sol";
 import "gofungible-erc-20-multichain-relayer-extension/contracts/token/IMultichainToken.sol";
 
+import "./erc-7786/IERC7786GatewaySource.sol";
+import "./erc-7786/IERC7786Recipient.sol";
+
 import "./interfaces/IBCAppCallbacks.sol";
 import "./interfaces/IICS26Router.sol";
 import "./interfaces/IBCMsgs.sol";
 
-contract MessengeRelayer is IMessageRelayer {
+contract MessengeRelayer is IMessageRelayer, IERC7786GatewaySource {
 
   // Core IBC Routing Router on the EVM Chain
   IICS26Router public immutable ibcRouter;
@@ -18,6 +21,10 @@ contract MessengeRelayer is IMessageRelayer {
 		ibcRouter = IICS26Router(_ibcRouter);
 	}
 
+	function sendMessage(bytes calldata recipient, bytes calldata payload, bytes[] calldata attributes) external payable returns (bytes32 sendId) [
+
+	]
+	
 	function sendCrosschainMessage(uint32 toChain, address toAddress, string calldata message) external override {
 
 		// 1. Instantiate the struct matching your Cosmos payload architecture
