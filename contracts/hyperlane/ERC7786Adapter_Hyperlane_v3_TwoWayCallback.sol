@@ -8,7 +8,7 @@ import "./interfaces/IMailbox.sol";
 import "./interfaces/IMessageRecipient.sol";
 
 // Hyperlane GMP
-contract MessengeRelayer is IERC7786GatewaySource, IMessageRecipient {
+contract ERC7786Adapter_Hyperlane_v3_TwoWayCallback is IERC7786GatewaySource, IMessageRecipient {
 
 	mapping(bytes32 => bool) public processedMessages;
 	
